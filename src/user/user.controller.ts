@@ -1,8 +1,8 @@
 import { ID } from 'scalars';
 import { UserService } from './user.service';
-import { User } from '../shared/models/user.model';
-import { CreateUserDto } from '../shared/models/create-user.dto';
-import { UpdateUserDto } from '../shared/models/update-user.dto';
+import { User } from '../shared/models/user/user.model';
+import { CreateUserDto } from '../shared/models/user/create-user.dto';
+import { UpdateUserDto } from '../shared/models/user/update-user.dto';
 import { Controller, Get, Param, Post, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 
 @Controller('/user')
