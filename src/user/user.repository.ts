@@ -3,7 +3,7 @@ import { User } from '../shared/models/user/user.model';
 import { NotFoundException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UserWithPassword } from '../shared/models/user/user-with-password.model';
-import { UpdateUserDto } from 'src/shared/models/user/update-user.dto';
+import { UpdateUserDto } from '../shared/models/user/update-user.dto';
 
 interface UsersWithPassword {
   [key: string]: UserWithPassword;
