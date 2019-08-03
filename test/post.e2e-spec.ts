@@ -1,23 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
-import { UserModule } from '../src/user/user.module';
+import { PostModule } from '../src/post/post.module';
 
-describe('UserController (e2e)', () => {
+describe('PostController (e2e)', () => {
   let app;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [UserModule],
+      imports: [PostModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it('/user/0 (GET) should return 404 status code', () => {
+  it('/post/0 should return 404 status code', () => {
     return request(app.getHttpServer())
-      .get('/user/0')
+      .get('/post/0')
       .expect(HttpStatus.NOT_FOUND);
   });
 });
