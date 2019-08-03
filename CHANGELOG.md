@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `/user/ (POST)` route.
+- `/user/:id (GET)` route.
+- `/user/:id (PUT)` route.
+- `/user/:id (DELETE)` route.
+- e2e initial tests to the user module.
+
 ### Changed
 
 - Move app files to the files folder.
