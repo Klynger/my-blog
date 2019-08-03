@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { PostRepository } from './post.repository';
 import { PostModel } from '../shared/models/post/post.model';
 import { CreatePostDto } from '../shared/models/post/create-post.dto';
-import { UpdatePostDto } from 'src/shared/models/post/update-post.dto';
+import { UpdatePostDto } from '../shared/models/post/update-post.dto';
 
 @Injectable()
 export class PostService {

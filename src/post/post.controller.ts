@@ -15,7 +15,7 @@ export class PostController {
   }
 
   @Post()
-  public addPost(@Body() postDto: CreatePostDto): PostModel {
+  public createPost(@Body() postDto: CreatePostDto): PostModel {
     return this.postService.addPost(postDto);
   }
 

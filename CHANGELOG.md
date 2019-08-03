@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `/post/ (POST)` route.
+- `/post/:id (GET)` route.
+- `/post/:id (PUT)` route.
+- `/post/:id (DELETE)` route.
+- e2e initial tests to the post module.
+
 ## [0.1.0] - 2019-08-03
 
 ### Added

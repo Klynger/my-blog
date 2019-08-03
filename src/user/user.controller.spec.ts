@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
+import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 
 describe('UserController', () => {
