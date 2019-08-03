@@ -1,9 +1,10 @@
 import { ID } from 'scalars';
+import { Injectable } from '@nestjs/common';
 import { User } from '../shared/models/user/user.model';
-import { NotFoundException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
-import { UserWithPassword } from '../shared/models/user/user-with-password.model';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
+import { UserWithPassword } from '../shared/models/user/user-with-password.model';
+import { NotFoundByParamException } from 'src/shared/exceptions/not-found-by-param.exception';
 
 interface UsersWithPassword {
   [key: string]: UserWithPassword;
@@ -19,10 +20,10 @@ export class UserRepository {
   }
 
   public getUser(id: ID): User {
-    if (this._usersWithPassword[id]) {
-      return UserWithPassword.parseToUser(this._usersWithPassword[id]);
+    if (!this._usersWithPassword[id]) {
+      throw new NotFoundByParamException('User', 'id', id);
     }
-    throw new NotFoundException(`User with id '${id}' not found`);
+    return UserWithPassword.parseToUser(this._usersWithPassword[id]);
   }
 
   public addUser(userDto: CreateUserDto): User {
@@ -40,7 +41,7 @@ export class UserRepository {
     const user = this._usersWithPassword[id];
 
     if (!user) {
-      throw new NotFoundException(`User with id '${id}' not found`);
+      throw new NotFoundByParamException('User', 'id', id);
     }
 
     if (userDto.name) {
@@ -54,7 +55,7 @@ export class UserRepository {
 
   public deleteUser(id: ID): void {
     if (!this._usersWithPassword[id]) {
-      throw new NotFoundException(`User with id '${id}' not found`);
+      throw new NotFoundByParamException('User', 'id', id);
     }
     delete this._usersWithPassword[id];
   }
