@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2019-08-06
+
 ### Changed
 
 - `User` model class name to be `UserModel`.
