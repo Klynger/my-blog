@@ -1,8 +1,8 @@
-import { User } from './user.model';
+import { UserModel } from './user.model';
 
-export class UserWithPassword extends User {
-  static parseToUser(userWithPassword: UserWithPassword): User {
-    const user: User = {
+export class UserWithPasswordModel extends UserModel {
+  static parseToUser(userWithPassword: UserWithPasswordModel): UserModel {
+    const user: UserModel = {
       id: userWithPassword.id,
       name: userWithPassword.name,
       username: userWithPassword.username,

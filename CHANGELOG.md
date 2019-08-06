@@ -6,11 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2019-08-06
+
+### Changed
+
+- `User` model class name to be `UserModel`.
+- Pass responsability from the repositories of throwing exceptions to the services.
+
+### Fixed
+
+- `PUT` verb of `/user/:id` was doing what a `PATCH` should do.
+
 ## [0.3.0] - 2019-08-06
 
 ### Added
 
-- Global typings module
+- Global typings module.
 - Relation between `Post` and `User`.
 
 ## [0.2.0] - 2019-08-03

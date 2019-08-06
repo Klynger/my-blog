@@ -1,13 +1,12 @@
 import { ID } from 'scalars';
 import { Injectable } from '@nestjs/common';
-import { User } from '../shared/models/user/user.model';
+import { UserModel } from '../shared/models/user/user.model';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
-import { UserWithPassword } from '../shared/models/user/user-with-password.model';
-import { NotFoundByParamException } from '../shared/exceptions/not-found-by-param.exception';
+import { UserWithPasswordModel } from '../shared/models/user/user-with-password.model';
 
 interface UsersWithPassword {
-  [key: string]: UserWithPassword;
+  [key: string]: UserWithPasswordModel;
 }
 
 @Injectable()
@@ -19,14 +18,12 @@ export class UserRepository {
     this._usersWithPassword = {};
   }
 
-  public getUser(id: ID): User {
-    if (!this._usersWithPassword[id]) {
-      throw new NotFoundByParamException('User', 'id', id);
-    }
-    return UserWithPassword.parseToUser(this._usersWithPassword[id]);
+  public getUser(id: ID): UserModel | null {
+    const user = this._usersWithPassword[id];
+    return user ? UserWithPasswordModel.parseToUser(user) : null;
   }
 
-  public addUser(userDto: CreateUserDto): User {
+  public addUser(userDto: CreateUserDto): UserModel {
     const id = UserRepository._idCount.toString();
     const userWithPassword = {
       id,
@@ -35,37 +32,33 @@ export class UserRepository {
     };
     this._usersWithPassword[id] = userWithPassword;
     UserRepository._idCount++;
-    return UserWithPassword.parseToUser(userWithPassword);
+    return UserWithPasswordModel.parseToUser(userWithPassword);
   }
 
-  public updateUser(userDto: UpdateUserDto, id: ID): User {
+  public updateUser(userDto: UpdateUserDto, id: ID): UserModel | null {
     const user = this._usersWithPassword[id];
 
     if (!user) {
-      throw new NotFoundByParamException('User', 'id', id);
+      return null;
     }
 
-    if (userDto.name) {
-      this._usersWithPassword[id] = {
-        ...this._usersWithPassword[id],
-        name: userDto.name,
-      };
-    }
-    return UserWithPassword.parseToUser(this._usersWithPassword[id]);
+    this._usersWithPassword[id] = {
+      ...this._usersWithPassword[id],
+      ...userDto,
+    };
+
+    return UserWithPasswordModel.parseToUser(this._usersWithPassword[id]);
   }
 
   public deleteUser(id: ID): void {
-    if (!this._usersWithPassword[id]) {
-      throw new NotFoundByParamException('User', 'id', id);
-    }
     delete this._usersWithPassword[id];
   }
 
-  public addPostToUser(postId: ID, userId: ID): void {
+  public addPostToUser(postId: ID, userId: ID): UserModel | null {
     const user = this._usersWithPassword[userId];
 
     if (!user) {
-      throw new NotFoundByParamException('User', 'id', userId);
+      return null;
     }
 
     this._usersWithPassword = {
@@ -75,5 +68,7 @@ export class UserRepository {
         posts: user.posts.concat([postId]),
       },
     };
+
+    return this._usersWithPassword[userId];
   }
 }
