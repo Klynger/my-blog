@@ -30,6 +30,7 @@ export class UserRepository {
     const id = UserRepository._idCount.toString();
     const userWithPassword = {
       id,
+      posts: [],
       ...userDto,
     };
     this._usersWithPassword[id] = userWithPassword;
@@ -58,5 +59,21 @@ export class UserRepository {
       throw new NotFoundByParamException('User', 'id', id);
     }
     delete this._usersWithPassword[id];
+  }
+
+  public addPostToUser(postId: ID, userId: ID): void {
+    const user = this._usersWithPassword[userId];
+
+    if (!user) {
+      throw new NotFoundByParamException('User', 'id', userId);
+    }
+
+    this._usersWithPassword = {
+      ...this._usersWithPassword,
+      [userId]: {
+        ...user,
+        posts: user.posts.concat([postId]),
+      },
+    };
   }
 }

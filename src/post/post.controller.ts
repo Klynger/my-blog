@@ -1,17 +1,40 @@
 import { ID } from 'scalars';
 import { PostService } from './post.service';
+import { UserService } from '../user/user.service';
 import { PostModel } from '../shared/models/post/post.model';
 import { CreatePostDto } from '../shared/models/post/create-post.dto';
 import { UpdatePostDto } from '../shared/models/post/update-post.dto';
-import { Controller, Get, Param, Post, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Get,
+  Put,
+  Post,
+  Body,
+  Param,
+  Query,
+  Delete,
+  HttpCode,
+  Controller,
+  HttpStatus,
+  BadRequestException,
+} from '@nestjs/common';
 
 @Controller('/post')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(private readonly postService: PostService, private readonly userService: UserService) {}
 
   @Get(':id')
   public getPost(@Param('id') id: ID): PostModel {
     return this.postService.getPost(id);
+  }
+
+  @Get()
+  public getPosts(@Query() query: QueryType) {
+    const { userId }: { userId?: string } = query;
+    if (userId === undefined) {
+      throw new BadRequestException('You must pass the query \'userId\'');
+    }
+    const user = this.userService.getUser(userId);
+    return this.postService.getPosts(user.posts);
   }
 
   @Post()

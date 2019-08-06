@@ -6,6 +6,7 @@ export class UserWithPassword extends User {
       id: userWithPassword.id,
       name: userWithPassword.name,
       username: userWithPassword.username,
+      posts: userWithPassword.posts,
     };
     return user;
   }

@@ -4,4 +4,5 @@ export class User {
   public id: ID;
   public username: string;
   public name: string;
+  public posts: ID[];
 }

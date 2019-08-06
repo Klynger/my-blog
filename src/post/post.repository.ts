@@ -47,6 +47,7 @@ export class PostRepository {
 
     this._posts[id] = {
       id,
+      creator: post.creator,
       ...postDto,
     };
 
@@ -59,6 +60,12 @@ export class PostRepository {
     }
 
     delete this._posts[id];
+  }
+
+  public getPosts(ids: ID[]) {
+    return Object.keys(this._posts)
+      .filter(id => ids.includes(id))
+      .map(id => this._posts[id]);
   }
 
   private _getNextId(): ID {

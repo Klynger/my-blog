@@ -9,19 +9,23 @@ import { UpdateUserDto } from '../shared/models/user/update-user.dto';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  getUser(id: ID): User {
+  public getUser(id: ID): User {
     return this.userRepository.getUser(id);
   }
 
-  createUser(createUserDto: CreateUserDto): User {
+  public createUser(createUserDto: CreateUserDto): User {
     return this.userRepository.addUser(createUserDto);
   }
 
-  updateUser(updateUserDto: UpdateUserDto, id: ID): User {
+  public updateUser(updateUserDto: UpdateUserDto, id: ID): User {
     return this.userRepository.updateUser(updateUserDto, id);
   }
 
-  deleteUser(id: ID): void {
+  public deleteUser(id: ID): void {
     this.userRepository.deleteUser(id);
+  }
+
+  public addPostToUser(postId: ID, userId: ID): void {
+    this.userRepository.addPostToUser(postId, userId);
   }
 }
