@@ -1,13 +1,13 @@
 import { ID } from 'scalars';
 import { Injectable } from '@nestjs/common';
-import { User } from '../shared/models/user/user.model';
+import { UserModel } from '../shared/models/user/user.model';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
-import { UserWithPassword } from '../shared/models/user/user-with-password.model';
+import { UserWithPasswordModel } from '../shared/models/user/user-with-password.model';
 import { NotFoundByParamException } from '../shared/exceptions/not-found-by-param.exception';
 
 interface UsersWithPassword {
-  [key: string]: UserWithPassword;
+  [key: string]: UserWithPasswordModel;
 }
 
 @Injectable()
@@ -19,14 +19,14 @@ export class UserRepository {
     this._usersWithPassword = {};
   }
 
-  public getUser(id: ID): User {
+  public getUser(id: ID): UserModel {
     if (!this._usersWithPassword[id]) {
       throw new NotFoundByParamException('User', 'id', id);
     }
-    return UserWithPassword.parseToUser(this._usersWithPassword[id]);
+    return UserWithPasswordModel.parseToUser(this._usersWithPassword[id]);
   }
 
-  public addUser(userDto: CreateUserDto): User {
+  public addUser(userDto: CreateUserDto): UserModel {
     const id = UserRepository._idCount.toString();
     const userWithPassword = {
       id,
@@ -35,10 +35,10 @@ export class UserRepository {
     };
     this._usersWithPassword[id] = userWithPassword;
     UserRepository._idCount++;
-    return UserWithPassword.parseToUser(userWithPassword);
+    return UserWithPasswordModel.parseToUser(userWithPassword);
   }
 
-  public updateUser(userDto: UpdateUserDto, id: ID): User {
+  public updateUser(userDto: UpdateUserDto, id: ID): UserModel {
     const user = this._usersWithPassword[id];
 
     if (!user) {
@@ -51,7 +51,7 @@ export class UserRepository {
         name: userDto.name,
       };
     }
-    return UserWithPassword.parseToUser(this._usersWithPassword[id]);
+    return UserWithPasswordModel.parseToUser(this._usersWithPassword[id]);
   }
 
   public deleteUser(id: ID): void {

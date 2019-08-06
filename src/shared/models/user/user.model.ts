@@ -1,6 +1,6 @@
 import { ID } from 'scalars';
 
-export class User {
+export class UserModel {
   public id: ID;
   public username: string;
   public name: string;
