@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `User` model class name to be `UserModel`.
+- Pass responsability from the repositories of throwing exceptions to the services.
+
+### Fixed
+
+- `PUT` verb of `/user/:id` was doing what a `PATCH` should do.
 
 ## [0.3.0] - 2019-08-06
 

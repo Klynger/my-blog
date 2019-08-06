@@ -3,7 +3,17 @@ import { UserService } from './user.service';
 import { UserModel } from '../shared/models/user/user.model';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
-import { Controller, Get, Param, Post, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Put,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Controller,
+} from '@nestjs/common';
 
 @Controller('/user')
 export class UserController {

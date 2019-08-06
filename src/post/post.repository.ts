@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { PostModel } from '../shared/models/post/post.model';
 import { CreatePostDto } from '../shared/models/post/create-post.dto';
 import { UpdatePostDto } from '../shared/models/post/update-post.dto';
-import { NotFoundByParamException } from '../shared/exceptions/not-found-by-param.exception';
 
 interface Posts {
   [key: string]: PostModel;
@@ -18,12 +17,8 @@ export class PostRepository {
     this._posts = {};
   }
 
-  public getPost(id: ID): PostModel {
-    const post = this._posts[id];
-    if (!post) {
-      throw new NotFoundByParamException('Post', 'id', id);
-    }
-    return post;
+  public getPost(id: ID): PostModel | null {
+    return this._posts[id] || null;
   }
 
   public addPost(postDto: CreatePostDto): PostModel {
@@ -38,11 +33,11 @@ export class PostRepository {
     return post;
   }
 
-  public updatePost(postDto: UpdatePostDto, id: ID): PostModel {
+  public updatePost(postDto: UpdatePostDto, id: ID): PostModel | null {
     const post = this._posts[id];
 
     if (!post) {
-      throw new NotFoundByParamException('Post', 'id', id);
+      return null;
     }
 
     this._posts[id] = {
@@ -55,10 +50,6 @@ export class PostRepository {
   }
 
   public deletePost(id: ID): void {
-    if (!this._posts[id]) {
-      throw new NotFoundByParamException('Post', 'id', id);
-    }
-
     delete this._posts[id];
   }
 

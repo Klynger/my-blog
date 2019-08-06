@@ -1,10 +1,11 @@
 import { ID } from 'scalars';
 import { Injectable } from '@nestjs/common';
 import { PostRepository } from './post.repository';
+import { UserService } from '../user/user.service';
 import { PostModel } from '../shared/models/post/post.model';
 import { CreatePostDto } from '../shared/models/post/create-post.dto';
 import { UpdatePostDto } from '../shared/models/post/update-post.dto';
-import { UserService } from '../user/user.service';
+import { NotFoundByParamException } from '../shared/exceptions/not-found-by-param.exception';
 
 @Injectable()
 export class PostService {
@@ -19,14 +20,25 @@ export class PostService {
   }
 
   public getPost(id: ID): PostModel {
-    return this.postRepository.getPost(id);
+    const post = this.postRepository.getPost(id);
+    if (!post) {
+      throw new NotFoundByParamException('Post', 'id', id);
+    }
+
+    return post;
   }
 
   public updatePost(postDto: UpdatePostDto, id: ID): PostModel {
-    return this.postRepository.updatePost(postDto, id);
+    const post = this.postRepository.updatePost(postDto, id);
+    if (!post) {
+      throw new NotFoundByParamException('Post', 'id', id);
+    }
+
+    return post;
   }
 
   public deletePost(id: ID): void {
+    this.getPost(id);
     this.postRepository.deletePost(id);
   }
 
