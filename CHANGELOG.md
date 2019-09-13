@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Remove `scalars` module and declaration of method returns.
+
 ## [0.3.1] - 2019-08-06
 
 ### Changed

@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ID } from 'scalars';
 import { UserRepository } from './user.repository';
-import { UserModel } from '../shared/models/user/user.model';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
 import { NotFoundByParamException } from '../shared/exceptions/not-found-by-param.exception';
@@ -10,7 +8,7 @@ import { NotFoundByParamException } from '../shared/exceptions/not-found-by-para
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  public getUser(id: ID): UserModel {
+  public getUser(id: string) {
     const user = this.userRepository.getUser(id);
 
     if (!user) {
@@ -19,11 +17,11 @@ export class UserService {
     return user;
   }
 
-  public createUser(createUserDto: CreateUserDto): UserModel {
+  public createUser(createUserDto: CreateUserDto) {
     return this.userRepository.addUser(createUserDto);
   }
 
-  public updateUser(updateUserDto: UpdateUserDto, id: ID): UserModel {
+  public updateUser(updateUserDto: UpdateUserDto, id: string) {
     const user = this.userRepository.updateUser(updateUserDto, id);
 
     if (!user) {
@@ -33,12 +31,12 @@ export class UserService {
     return user;
   }
 
-  public deleteUser(id: ID): void {
+  public deleteUser(id: string) {
     this.getUser(id);
     this.userRepository.deleteUser(id);
   }
 
-  public addPostToUser(postId: ID, userId: ID): void {
+  public addPostToUser(postId: string, userId: string) {
     const user = this.userRepository.addPostToUser(postId, userId);
 
     if (!user) {

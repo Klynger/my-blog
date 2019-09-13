@@ -1,8 +1,6 @@
-import { ID } from 'scalars';
-
 export class PostModel {
-  public id: ID;
+  public id: string;
   public title?: string;
   public content: string;
-  public creator: ID;
+  public creator: string;
 }

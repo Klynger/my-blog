@@ -1,6 +1,4 @@
-import { ID } from 'scalars';
 import { UserService } from './user.service';
-import { UserModel } from '../shared/models/user/user.model';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
 import {
@@ -15,28 +13,28 @@ import {
   Controller,
 } from '@nestjs/common';
 
-@Controller('/user')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get(':id')
-  getUser(@Param('id') id: ID): UserModel {
+  getUser(@Param('id') id: string) {
     return this.userService.getUser(id);
   }
 
   @Post()
-  createUser(@Body() createUserDto: CreateUserDto): UserModel {
+  createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
 
   @Put(':id')
-  updateUser(@Body() updateUserDto: UpdateUserDto, @Param('id') id: ID): UserModel {
+  updateUser(@Body() updateUserDto: UpdateUserDto, @Param('id') id: string) {
     return this.userService.updateUser(updateUserDto, id);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteUser(@Param('id') id: ID): void {
+  deleteUser(@Param('id') id: string) {
     this.userService.deleteUser(id);
   }
 }

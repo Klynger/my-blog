@@ -1,8 +1,6 @@
-import { ID } from 'scalars';
-
 export class UserModel {
-  public id: ID;
+  public id: string;
   public username: string;
   public name: string;
-  public posts: ID[];
+  public posts: string[];
 }

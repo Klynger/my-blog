@@ -1,6 +1,4 @@
-import { ID } from 'scalars';
 import { Injectable } from '@nestjs/common';
-import { UserModel } from '../shared/models/user/user.model';
 import { CreateUserDto } from '../shared/models/user/create-user.dto';
 import { UpdateUserDto } from '../shared/models/user/update-user.dto';
 import { UserWithPasswordModel } from '../shared/models/user/user-with-password.model';
@@ -18,12 +16,12 @@ export class UserRepository {
     this._usersWithPassword = {};
   }
 
-  public getUser(id: ID): UserModel | null {
+  public getUser(id: string) {
     const user = this._usersWithPassword[id];
     return user ? UserWithPasswordModel.parseToUser(user) : null;
   }
 
-  public addUser(userDto: CreateUserDto): UserModel {
+  public addUser(userDto: CreateUserDto) {
     const id = UserRepository._idCount.toString();
     const userWithPassword = {
       id,
@@ -35,7 +33,7 @@ export class UserRepository {
     return UserWithPasswordModel.parseToUser(userWithPassword);
   }
 
-  public updateUser(userDto: UpdateUserDto, id: ID): UserModel | null {
+  public updateUser(userDto: UpdateUserDto, id: string) {
     const user = this._usersWithPassword[id];
 
     if (!user) {
@@ -50,11 +48,11 @@ export class UserRepository {
     return UserWithPasswordModel.parseToUser(this._usersWithPassword[id]);
   }
 
-  public deleteUser(id: ID): void {
+  public deleteUser(id: string) {
     delete this._usersWithPassword[id];
   }
 
-  public addPostToUser(postId: ID, userId: ID): UserModel | null {
+  public addPostToUser(postId: string, userId: string) {
     const user = this._usersWithPassword[userId];
 
     if (!user) {

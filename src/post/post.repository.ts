@@ -1,4 +1,3 @@
-import { ID } from 'scalars';
 import { Injectable } from '@nestjs/common';
 import { PostModel } from '../shared/models/post/post.model';
 import { CreatePostDto } from '../shared/models/post/create-post.dto';
@@ -17,11 +16,11 @@ export class PostRepository {
     this._posts = {};
   }
 
-  public getPost(id: ID): PostModel | null {
+  public getPost(id: string) {
     return this._posts[id] || null;
   }
 
-  public addPost(postDto: CreatePostDto): PostModel {
+  public addPost(postDto: CreatePostDto) {
     const id = this._getNextId();
     const post = {
       id,
@@ -33,7 +32,7 @@ export class PostRepository {
     return post;
   }
 
-  public updatePost(postDto: UpdatePostDto, id: ID): PostModel | null {
+  public updatePost(postDto: UpdatePostDto, id: string) {
     const post = this._posts[id];
 
     if (!post) {
@@ -49,17 +48,17 @@ export class PostRepository {
     return this._posts[id];
   }
 
-  public deletePost(id: ID): void {
+  public deletePost(id: string) {
     delete this._posts[id];
   }
 
-  public getPosts(ids: ID[]) {
+  public getPosts(ids: string[]) {
     return Object.keys(this._posts)
       .filter(id => ids.includes(id))
       .map(id => this._posts[id]);
   }
 
-  private _getNextId(): ID {
+  private _getNextId() {
     const availableId = PostRepository._idCount.toString();
     PostRepository._idCount++;
 

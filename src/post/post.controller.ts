@@ -1,7 +1,5 @@
-import { ID } from 'scalars';
 import { PostService } from './post.service';
 import { UserService } from '../user/user.service';
-import { PostModel } from '../shared/models/post/post.model';
 import { CreatePostDto } from '../shared/models/post/create-post.dto';
 import { UpdatePostDto } from '../shared/models/post/update-post.dto';
 import {
@@ -23,7 +21,7 @@ export class PostController {
   constructor(private readonly postService: PostService, private readonly userService: UserService) {}
 
   @Get(':id')
-  public getPost(@Param('id') id: ID): PostModel {
+  public getPost(@Param('id') id: string) {
     return this.postService.getPost(id);
   }
 
@@ -38,18 +36,18 @@ export class PostController {
   }
 
   @Post()
-  public createPost(@Body() postDto: CreatePostDto): PostModel {
+  public createPost(@Body() postDto: CreatePostDto) {
     return this.postService.addPost(postDto);
   }
 
   @Put(':id')
-  public updatePost(@Body() postDto: UpdatePostDto, @Param('id') id: ID): PostModel {
+  public updatePost(@Body() postDto: UpdatePostDto, @Param('id') id: string) {
     return this.postService.updatePost(postDto, id);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public deletePost(@Param('id') id: ID): void {
+  public deletePost(@Param('id') id: string) {
     this.postService.deletePost(id);
   }
 }

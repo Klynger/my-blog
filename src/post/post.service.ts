@@ -1,4 +1,3 @@
-import { ID } from 'scalars';
 import { Injectable } from '@nestjs/common';
 import { PostRepository } from './post.repository';
 import { UserService } from '../user/user.service';
@@ -11,7 +10,7 @@ import { NotFoundByParamException } from '../shared/exceptions/not-found-by-para
 export class PostService {
   constructor(private readonly postRepository: PostRepository, private readonly userService: UserService) {}
 
-  public addPost(postDto: CreatePostDto): PostModel {
+  public addPost(postDto: CreatePostDto) {
     this.userService.getUser(postDto.creator);
     const post = this.postRepository.addPost(postDto);
     this.userService.addPostToUser(post.id, post.creator);
@@ -19,7 +18,7 @@ export class PostService {
     return post;
   }
 
-  public getPost(id: ID): PostModel {
+  public getPost(id: string) {
     const post = this.postRepository.getPost(id);
     if (!post) {
       throw new NotFoundByParamException('Post', 'id', id);
@@ -28,7 +27,7 @@ export class PostService {
     return post;
   }
 
-  public updatePost(postDto: UpdatePostDto, id: ID): PostModel {
+  public updatePost(postDto: UpdatePostDto, id: string) {
     const post = this.postRepository.updatePost(postDto, id);
     if (!post) {
       throw new NotFoundByParamException('Post', 'id', id);
@@ -37,12 +36,12 @@ export class PostService {
     return post;
   }
 
-  public deletePost(id: ID): void {
+  public deletePost(id: string) {
     this.getPost(id);
     this.postRepository.deletePost(id);
   }
 
-  public getPosts(ids: ID[]): PostModel[] {
+  public getPosts(ids: string[]): PostModel[] {
     return this.postRepository.getPosts(ids);
   }
 }
